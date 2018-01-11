@@ -1,14 +1,19 @@
+import { MaterialModule } from './material.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { StoreModule } from '@ngrx/store';
 
 import { AppComponent } from './app.component';
+import { simpleReducer } from './simple.reducer';
 
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    MaterialModule,
+    StoreModule.forRoot({ message: simpleReducer })
   ],
   providers: [],
   bootstrap: [AppComponent]
