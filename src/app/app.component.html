@@ -6,8 +6,20 @@
     <mat-card>
       <button mat-raised-button color="accent">ngrxFire</button>
       <h2>{{ message$ | async }}</h2>
-        <button mat-raised-button color="primary" (click)="spanishMessage()">Spanish</button>
-        <button mat-raised-button color="primary" (click)="frenchMessage()">French</button>
+      <button mat-raised-button color="primary" (click)="spanishMessage()">Spanish</button>
+      <button mat-raised-button color="primary" (click)="frenchMessage()">French</button>
+      <div *ngIf="post | async as p">
+        <h2>{{ p.text }}</h2>
+        <h4>Votes: {{ p.likes }}</h4>
+        <button mat-raised-button (click)="upvote()">Upvote</button>
+        <button mat-raised-button (click)="downvote()">Downvote</button>
+        <button mat-raised-button (click)="resetPost()">Reset</button>
+        <br/>
+        <mat-form-field>
+          <input matInput placeholder="Text" [(ngModel)]="text" name="text">
+        </mat-form-field>
+        <button mat-raised-button (click)="editText()" >Change Title</button>
+      </div>
     </mat-card>
   
     <span class="done">
