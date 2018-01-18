@@ -1,0 +1,42 @@
+<button mat-raised-button color="primary" (click)="loadAllArticles()">Show All Articles</button>
+<button mat-raised-button color="primary" (click)="createArticleView()">Create Article</button>
+<button mat-raised-button color="primary" (click)="getArticleByIdView()">Search Article By Id</button>
+
+<div [ngSwitch]="task">
+  <ng-template [ngSwitchCase]="'all'">
+    <mat-list role="list">
+      <mat-list-item *ngFor="let article of articles$ | async">
+        {{article.id}} - {{article.title}} - {{article.category}}
+      </mat-list-item>
+    </mat-list>
+  </ng-template>
+
+  <ng-template [ngSwitchCase]="'create'">
+    <p> <b>{{ message$ | async }}</b> </p>
+    <form [formGroup]="articleForm" (ngSubmit)="onFormSubmit()">
+      <p><mat-form-field><input matInput placeholder="New ID" formControlName="id"></mat-form-field>
+        <label *ngIf="id.errors?.required && !articleForm.pristine" style="color:red">
+                            Enter article id
+                    </label>
+      </p>
+      <p><mat-form-field><input matInput placeholder="Title" formControlName="title"></mat-form-field></p>
+      <p><mat-form-field><input matInput placeholder="Category" formControlName="category"></mat-form-field></p>
+      <p><button mat-raised-button color="accent"> Submit </button> </p>
+    </form>
+    <mat-list role="list">
+      <mat-list-item *ngFor="let article of articles$ | async; trackBy:$index">
+        {{article.id}} - {{article.title}} - {{article.category}}
+      </mat-list-item>
+    </mat-list>
+  </ng-template>
+
+  <ng-template [ngSwitchCase]="'get'">
+    <p><mat-form-field><input matInput placeholder="Id" [(ngModel)]="articleId" (input)="searchArticleById(articleId)"></mat-form-field></p>
+    <mat-list>
+      <mat-list-item *ngFor="let article of articles$ | async">
+        {{article.id}} - {{article.title}} - {{article.category}}
+      </mat-list-item>
+    </mat-list>
+  </ng-template>
+  <ng-template ngSwitchDefault> <br/><b>Select Task</b> </ng-template>
+</div>
